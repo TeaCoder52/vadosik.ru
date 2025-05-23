@@ -1,13 +1,24 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import tailwindcss from '@tailwindcss/vite'
 
-export default defineConfig({
-	plugins: [react(), tailwindcss()],
-	server: {
-		host: true,
-		watch: {
-			usePolling: true,
+export default defineConfig(({ mode }) => {
+	const env = loadEnv(mode, process.cwd())
+
+	const ALLOWED_HOSTS = env['VITE_ALLOWED_HOSTS']
+		? env['VITE_ALLOWED_HOSTS'].split(',').map((host) => host.trim())
+		: ['localhost']
+
+	return {
+		plugins: [react(), tailwindcss()],
+		server: {
+			host: true,
+			watch: {
+				usePolling: true,
+			},
 		},
-	},
+		preview: {
+			allowedHosts: ALLOWED_HOSTS,
+		},
+	}
 })
