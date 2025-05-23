@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@import "./fonts.css";
+
+@layer base {
+	body {
+		@apply bg-zinc-950 text-zinc-200;
+
+		font-family: 'Geist', sans-serif;
+	}
+
+	a {
+		@apply transition-colors duration-200;
+	}
+}
